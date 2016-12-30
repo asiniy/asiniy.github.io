@@ -1,34 +1,26 @@
-name:               "Ink"
-description:        "A minimalistic jekyll theme for humans"
+name:               "Alex Antonov"
+description:        "Software craftsman"
 
-url:                ""
-author:             "thinker3197"
-email:              "jhondoe@abc.com"
-gravatar_hash:      "205e460b479e2e5b48aec07710c08d50"
-twitter:            "jhondoe"
-email:              "jhondoe@abc.com"
-github:             "jhondoe"
-pinterest:          "jhondoe"
-linkedin:           "jhondoe"
-facebook:           "jhondoe"
+avatar:             "http://cs5792.vk.me/u83675669/-6/y_b1d7190e.jpg"
+url:                "asiniy.com"
+author:             ""
+email:              ""
+twitter:            "asiniy"
+email:              "kaburbundokel11g@gmail.com"
+github:             "asiniy"
+stackoverflow:      "users/2926641/asiniy"
 
-disqus_shortname:   "thinker3197"
+disqus:             "disqus_TcAs6ELJKq"
 
-background:         "http://apple.wallpapersfine.com/wallpapers/original/1242x2208/w-5273.jpg"
+background:         "http://www.justocascante.com/images/painting/sea2.jpg"
 
-paginate:           5
+paginate:           20
 paginate_path:      "/page:num/"
 
 baseurl:            ""
 permalink:          /:year/:month/:day/:title/
 
 markdown:           kramdown
-
-nav:
-  - name:           "About"
-    href:           "/about"
-  - name:           "Download"
-    href:           "/releases"
 
 sass:
   style:            :compressed

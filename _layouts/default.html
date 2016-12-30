@@ -2,10 +2,12 @@
 <html lang="en">
 {% include head.html %}
 
-<body class="preload">
+<body>
     <div class="top"></div>
     <div class="profile" style="background-image: url({{ site.background }});">
-        <img src="http://www.gravatar.com/avatar/{{ site.gravatar_hash }}?s=140" class="img-circle" />
+        <a href="/">
+          <img src="{{ site.avatar }}" class="img-circle" />
+        </a>
         <h3>{{ site.name }}</h3>
         <p>{{ site.description }}</p>
         <ul class="social">
@@ -29,6 +31,10 @@
             <a type="button" href="http://facebook.com/{{ site.facebook }}">
                 <i class="fa fa-facebook"></i>
             </a>
+            {% endif %} {% if site.stackoverflow %}
+            <a type="button" href="http://stackoverflow.com/{{ site.stackoverflow }}">
+                <i class="fa fa-stack-overflow"></i>
+            </a>
             {% endif %}
         </ul>
     </div>
@@ -36,9 +42,4 @@
         {{ content }}
     </div>
 </body>
-<script type="text/javascript">
-    window.onload = function(){
-        document.getElementsByTagName("BODY")[0].classList.remove("preload");
-    }
-</script>
 </html>
