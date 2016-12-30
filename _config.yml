@@ -41,3 +41,5 @@ defaults:
 
 gems:
   - jekyll-paginate
+
+destination:        "docs"

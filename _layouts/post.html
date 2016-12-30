@@ -4,9 +4,12 @@ layout: default
 
 <div class="content post">
   <h1 class="post-title">{{ page.title }}</h1>
-  <div class="post-date">
+  <div class="post-description">
     <time>{{ page.date | date_to_string }}</time>
-    Tags: ruby, elixir
+    in
+    {% for tag in page.tags %}
+      <span class="tag"><a href="/tag/{{ tag }}">{{ tag }}</a></span>
+    {% endfor %}
   </div>
   {{ content }}
 </div>

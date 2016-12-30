@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to migrate from Coffeescript + JSX => ES6 + JSX</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
+    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Alex Antonov" href="/feed.xml" />
+</head>
+
+
+<body>
+    <div class="top"></div>
+    <div class="profile" style="background-image: url(http://www.justocascante.com/images/painting/sea2.jpg);">
+        <a href="/">
+          <img src="http://cs5792.vk.me/u83675669/-6/y_b1d7190e.jpg" class="img-circle" />
+        </a>
+        <h3>Alex Antonov</h3>
+        <p>Software craftsman</p>
+
+        <div class="tags_stat">
+          <h4>Tags</h4>
+          
+          <p class="tag">
+            <a href="/tag/elixir">
+              elixir (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/react.js">
+              react.js (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/javascript">
+              javascript (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/ruby">
+              ruby (1)
+            </a>
+          </p>
+          
+        </div>
+        <ul class="social">
+            
+            <a type="button" href="http://github.com/asiniy">
+                <i class="fa fa-github"></i>
+            </a>
+             
+            <a type="button" href="http://twitter.com/asiniy">
+                <i class="fa fa-twitter"></i>
+            </a>
+                
+            <a type="button" href="http://stackoverflow.com/users/2926641/asiniy">
+                <i class="fa fa-stack-overflow"></i>
+            </a>
+            
+        </ul>
+    </div>
+    <div class="posts">
+        <div class="content post">
+  <h1 class="post-title">How to migrate from Coffeescript + JSX => ES6 + JSX</h1>
+  <div class="post-description">
+    <time>25 Mar 2016</time>
+    in
+    
+      <span class="tag"><a href="/tag/javascript">javascript</a></span>
+    
+      <span class="tag"><a href="/tag/react.js">react.js</a></span>
+    
+  </div>
+  <p>I maintained an SPA with relatively old frontend. The main trouble was coffeescript - a lot of new things built by ES6 standard and tying process can be a nightmare.
+The simplest thing in this case - to move to ES6. Not a big deal, things like <a href="https://github.com/decaffeinate/decaffeinate">decaffeinate</a> can help you!</p>
+
+<p>I got a big problem. Decaffeinate can’t work with JSX, but actually coffeescript &amp; JSX are mixed together inside one file. I’ll describe how to migrate below.</p>
+
+<p>Preinstall dependencies</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm install -g babel-plugin-transform-react-createelement-to-jsx coffee-react lebab babel-cli
+</code></pre>
+</div>
+
+<p>Okay, we have a set of <code class="highlighter-rouge">.coffee</code> files (maybe <code class="highlighter-rouge">.cjsx</code>, that’s up to you). <code class="highlighter-rouge">cd</code> to root directory of these files and:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name \*.coffee -print | xargs cjsx -bc
+</code></pre>
+</div>
+
+<p>Now we have plain old <code class="highlighter-rouge">ES5</code> with ugly <code class="highlighter-rouge">React.createElement</code> inside. Let’s deal with both drawbacks</p>
+
+<p><a href="https://github.com/mohebifar/lebab">Lebab</a> is awesome 5to6 tool. Let’s convert old style to new.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name \*.js -print | xargs -iFile lebab File -o File
+</code></pre>
+</div>
+
+<p>It’s time for <code class="highlighter-rouge">JSX</code>. <a href="http://stackoverflow.com/a/36218474/2926641">Daniel</a> gave me a hint how to do it:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name \*.js -print | xargs -iFile babel --plugins transform-react-createelement-to-jsx File -o File
+</code></pre>
+</div>
+
+<p>Another small thing. <code class="highlighter-rouge">Coffee-script</code> package adds a comment to the top of each file it converts. Remove these comments:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name \*.js -print | xargs -iFile sed -i '1d' File
+</code></pre>
+</div>
+
+<p>Last. You are using build tool, aren’t you? So ok, let’s replace <code class="highlighter-rouge">.coffee</code> dependencies by <code class="highlighter-rouge">.js</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name \*.js -print | xargs sed -i 's/.coffee/.js/g'
+</code></pre>
+</div>
+
+<p>Volia! Happy ES6!</p>
+
+</div>
+
+
+  
+<div id="disqus_thread"></div>
+<script>
+
+  var disqus_config = function () {
+    this.page.url = 'http://asiniy.com//2016/03/25/Convert-Coffeescript-With-ES5-To-JSX-With-ES6/';
+    this.page.identifier = 'disqus_TcAs6ELJKq';
+  };
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//asiniy-com.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>Alex Antonov</title>
+		<link>asiniy.com</link>
+		<atom:link href="asiniy.com/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>How do I test sessions in ExUnit?</title>
+        <description>&lt;p&gt;This is the small recipe I want to share with community. I had a troubles with testing sessions in &lt;code class=&quot;highlighter-rouge&quot;&gt;ExUnit&lt;/code&gt;. I started to google for answer. Only big piece of hard to understand code in &lt;a href=&quot;http://alexmarandon.com/articles/testing_phoenix_controllers/#testing-with-the-default-plug-pipeline&quot;&gt;Testing Phoenix controllers&lt;/a&gt; article by Alex Marandon. But actually, this piece of code didn’t worked, at least to me.&lt;/p&gt;
+
+&lt;p&gt;I also found &lt;a href=&quot;https://github.com/phoenixframework/phoenix/issues/1008&quot;&gt;github issue&lt;/a&gt; in phoenix repo. Chris McCord said there are two ways to test sessions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use private assigns (I haven’t got it), and&lt;/li&gt;
+  &lt;li&gt;Make a request to authentication controller to have a &lt;code class=&quot;highlighter-rouge&quot;&gt;conn&lt;/code&gt; with request on response. Let’s do it!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Actually code is simple, firstly, I wrote a module in test support. It’s about returning &lt;code class=&quot;highlighter-rouge&quot;&gt;conn()&lt;/code&gt; with a session assigned:&lt;/p&gt;
+
+&lt;div class=&quot;language-elixir highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# test/support/signed_conn.ex&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;defmodule&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MyApp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SignedConn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;@endpoint&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MyApp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Endpoint&lt;/span&gt;
+
+  &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Phoenix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConnTest&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signed_user_conn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MyApp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;conn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;|&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sd&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/your/new_session_path&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;%{&lt;/span&gt;
+      &lt;span class=&quot;sd&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;session&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;%{&lt;/span&gt;
+        &lt;span class=&quot;sd&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;email&quot;&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;sd&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;password&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As you can notice, I created a user via &lt;code class=&quot;highlighter-rouge&quot;&gt;ex_machina&lt;/code&gt; and then made a post request to my sessions controller.&lt;/p&gt;
+
+&lt;p&gt;Now, let’s &lt;code class=&quot;highlighter-rouge&quot;&gt;import MyApp.SignedConn&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;MyApp.ConnCase&lt;/code&gt; and&lt;/p&gt;
+
+&lt;p&gt;Volia! We can use &lt;code class=&quot;highlighter-rouge&quot;&gt;conn()&lt;/code&gt; without any session assigned, but &lt;code class=&quot;highlighter-rouge&quot;&gt;signed_user_conn()&lt;/code&gt; for connections with already assigned user session!&lt;/p&gt;
+</description>
+				<pubDate>Sun, 29 May 2016 00:00:00 +0300</pubDate>
+				<link>asiniy.com/2016/05/29/How-do-I-test-ExUnit-sessions/</link>
+				<guid isPermaLink="true">asiniy.com/2016/05/29/How-do-I-test-ExUnit-sessions/</guid>
+			</item>
+		
+			<item>
+				<title>How I migrated SPA backend codebase from Rails to Phoenix</title>
+        <description>&lt;p&gt;Some time ago I developed a pretty simple SPA with Rails on backend &amp;amp; React.js on the front. It was pretty simple, but (surprisingly for me!) started to grow like on steroids. Rails started to be a bottleneck since one of the customer requirements was not just making application fast. He wanted it to be instant.&lt;/p&gt;
+
+&lt;p&gt;It’s not a big deal to buy a couple of servers. But 50 ms response isn’t enough for my client. So, I decided to rewrite backend on something else. After long thinking I chose elixir &amp;amp; phoenix.&lt;/p&gt;
+
+&lt;p&gt;I want to share this transition details with you - maybe you can find something interesting.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-run-both-rails--elixir-on-the-same-address&quot;&gt;How to run both rails &amp;amp; elixir on the same address?&lt;/h3&gt;
+
+&lt;p&gt;You have to run rails &amp;amp; phoenix on the same address to prevent battle with CORS.&lt;/p&gt;
+
+&lt;p&gt;I solved this by installing &lt;code class=&quot;highlighter-rouge&quot;&gt;nginx&lt;/code&gt; locally &amp;amp; configuring it to serve few servers on the same address. &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/nginx/conf.d/development.conf&lt;/code&gt; listing:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server {
+  listen 80;
+  server_name development.local;
+
+  location / {
+    proxy_pass http://127.0.0.1:3000; // rails server
+  }
+
+  location /api {
+    proxy_pass http://127.0.0.1:4000; // phoenix server; as you can notice, my rails server doesn&#39;t have even /api namespace - it was just a rapid prototype
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;restart nginx, add these lines to &lt;code class=&quot;highlighter-rouge&quot;&gt;etc/hosts/&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# For elixir-to-rails transition
+127.0.0.1 development.local
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;and you can open &lt;code class=&quot;highlighter-rouge&quot;&gt;http://development.local&lt;/code&gt; in your browser.&lt;/p&gt;
+</description>
+				<pubDate>Sat, 09 Apr 2016 00:00:00 +0300</pubDate>
+				<link>asiniy.com/2016/04/09/Transition-from-Rails-To-Phoenix/</link>
+				<guid isPermaLink="true">asiniy.com/2016/04/09/Transition-from-Rails-To-Phoenix/</guid>
+			</item>
+		
+			<item>
+				<title>How to migrate from Coffeescript + JSX =&gt; ES6 + JSX</title>
+        <description>&lt;p&gt;I maintained an SPA with relatively old frontend. The main trouble was coffeescript - a lot of new things built by ES6 standard and tying process can be a nightmare.
+The simplest thing in this case - to move to ES6. Not a big deal, things like &lt;a href=&quot;https://github.com/decaffeinate/decaffeinate&quot;&gt;decaffeinate&lt;/a&gt; can help you!&lt;/p&gt;
+
+&lt;p&gt;I got a big problem. Decaffeinate can’t work with JSX, but actually coffeescript &amp;amp; JSX are mixed together inside one file. I’ll describe how to migrate below.&lt;/p&gt;
+
+&lt;p&gt;Preinstall dependencies&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install -g babel-plugin-transform-react-createelement-to-jsx coffee-react lebab babel-cli
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Okay, we have a set of &lt;code class=&quot;highlighter-rouge&quot;&gt;.coffee&lt;/code&gt; files (maybe &lt;code class=&quot;highlighter-rouge&quot;&gt;.cjsx&lt;/code&gt;, that’s up to you). &lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt; to root directory of these files and:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name \*.coffee -print | xargs cjsx -bc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we have plain old &lt;code class=&quot;highlighter-rouge&quot;&gt;ES5&lt;/code&gt; with ugly &lt;code class=&quot;highlighter-rouge&quot;&gt;React.createElement&lt;/code&gt; inside. Let’s deal with both drawbacks&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/mohebifar/lebab&quot;&gt;Lebab&lt;/a&gt; is awesome 5to6 tool. Let’s convert old style to new.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name \*.js -print | xargs -iFile lebab File -o File
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It’s time for &lt;code class=&quot;highlighter-rouge&quot;&gt;JSX&lt;/code&gt;. &lt;a href=&quot;http://stackoverflow.com/a/36218474/2926641&quot;&gt;Daniel&lt;/a&gt; gave me a hint how to do it:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name \*.js -print | xargs -iFile babel --plugins transform-react-createelement-to-jsx File -o File
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Another small thing. &lt;code class=&quot;highlighter-rouge&quot;&gt;Coffee-script&lt;/code&gt; package adds a comment to the top of each file it converts. Remove these comments:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name \*.js -print | xargs -iFile sed -i &#39;1d&#39; File
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Last. You are using build tool, aren’t you? So ok, let’s replace &lt;code class=&quot;highlighter-rouge&quot;&gt;.coffee&lt;/code&gt; dependencies by &lt;code class=&quot;highlighter-rouge&quot;&gt;.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name \*.js -print | xargs sed -i &#39;s/.coffee/.js/g&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Volia! Happy ES6!&lt;/p&gt;
+</description>
+				<pubDate>Fri, 25 Mar 2016 00:00:00 +0300</pubDate>
+				<link>asiniy.com/2016/03/25/Convert-Coffeescript-With-ES5-To-JSX-With-ES6/</link>
+				<guid isPermaLink="true">asiniy.com/2016/03/25/Convert-Coffeescript-With-ES5-To-JSX-With-ES6/</guid>
+			</item>
+		
+	</channel>
+</rss>

@@ -14,6 +14,7 @@ html,
 body {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 html {
@@ -22,8 +23,7 @@ html {
     font-weight: 300;
     line-height: 1.6;
     @media (min-width: 38em) {
-        font-size: 20px;
-        overflow-x: hidden;
+      font-size: 20px;
     }
 }
 
@@ -319,11 +319,31 @@ tbody tr:nth-child(odd) th {
         width: 50%;
         float: right;
     }
+    h4 {
+      text-align: center;
+    }
     p {
-        height: auto;
-        width: 100%;
-        text-align: center;
-        float: none;
+      height: auto;
+      width: 100%;
+      text-align: center;
+      float: none;
+    }
+    .tags_stat {
+      h4 {
+        margin-bottom: 0.5em;
+      }
+      .tag  {
+        margin-bottom: 0em;
+        margin-top: 0em;
+
+        @media (min-width: 38em) {
+          margin-bottom: 0.2em;
+        }
+
+        a {
+          border-bottom: 1px dotted;
+        }
+      }
     }
     .social {
         margin-left: 25vw;
@@ -383,29 +403,13 @@ tbody tr:nth-child(odd) th {
 }
 
 .bloghead {
-    .bloghead-title {
-        span {
-            color: #BDBDBD;
-        }
+  margin-bottom: 2rem;
+
+  .bloghead-title {
+    span {
+      color: #BDBDBD;
     }
-    .bloghead-nav {
-        a {
-            color: #000;
-            font-weight: 800;
-            &:hover {
-                color: #424242;
-            }
-        }
-        span {
-            font-weight: 800;
-            color: #EC407A;
-            &:hover,
-            &:focus {
-                color: #EC407A;
-                text-decoration: none;
-            }
-        }
-    }
+  }
 }
 
 .post-list {
@@ -421,6 +425,18 @@ tbody tr:nth-child(odd) th {
       @media (min-width: 38em) {
         width: 6rem;
       }
+    }
+  }
+}
+
+.content {
+  .post-description {
+    .tag:after {
+      content: ','
+    }
+
+    .tag:last-of-type:after {
+      content: ''
     }
   }
 }

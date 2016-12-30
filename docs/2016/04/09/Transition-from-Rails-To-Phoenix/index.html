@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How I migrated SPA backend codebase from Rails to Phoenix</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
+    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Alex Antonov" href="/feed.xml" />
+</head>
+
+
+<body>
+    <div class="top"></div>
+    <div class="profile" style="background-image: url(http://www.justocascante.com/images/painting/sea2.jpg);">
+        <a href="/">
+          <img src="http://cs5792.vk.me/u83675669/-6/y_b1d7190e.jpg" class="img-circle" />
+        </a>
+        <h3>Alex Antonov</h3>
+        <p>Software craftsman</p>
+
+        <div class="tags_stat">
+          <h4>Tags</h4>
+          
+          <p class="tag">
+            <a href="/tag/elixir">
+              elixir (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/react.js">
+              react.js (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/javascript">
+              javascript (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/ruby">
+              ruby (1)
+            </a>
+          </p>
+          
+        </div>
+        <ul class="social">
+            
+            <a type="button" href="http://github.com/asiniy">
+                <i class="fa fa-github"></i>
+            </a>
+             
+            <a type="button" href="http://twitter.com/asiniy">
+                <i class="fa fa-twitter"></i>
+            </a>
+                
+            <a type="button" href="http://stackoverflow.com/users/2926641/asiniy">
+                <i class="fa fa-stack-overflow"></i>
+            </a>
+            
+        </ul>
+    </div>
+    <div class="posts">
+        <div class="content post">
+  <h1 class="post-title">How I migrated SPA backend codebase from Rails to Phoenix</h1>
+  <div class="post-description">
+    <time>09 Apr 2016</time>
+    in
+    
+      <span class="tag"><a href="/tag/elixir">elixir</a></span>
+    
+      <span class="tag"><a href="/tag/ruby">ruby</a></span>
+    
+      <span class="tag"><a href="/tag/react.js">react.js</a></span>
+    
+      <span class="tag"><a href="/tag/javascript">javascript</a></span>
+    
+  </div>
+  <p>Some time ago I developed a pretty simple SPA with Rails on backend &amp; React.js on the front. It was pretty simple, but (surprisingly for me!) started to grow like on steroids. Rails started to be a bottleneck since one of the customer requirements was not just making application fast. He wanted it to be instant.</p>
+
+<p>It’s not a big deal to buy a couple of servers. But 50 ms response isn’t enough for my client. So, I decided to rewrite backend on something else. After long thinking I chose elixir &amp; phoenix.</p>
+
+<p>I want to share this transition details with you - maybe you can find something interesting.</p>
+
+<h3 id="how-to-run-both-rails--elixir-on-the-same-address">How to run both rails &amp; elixir on the same address?</h3>
+
+<p>You have to run rails &amp; phoenix on the same address to prevent battle with CORS.</p>
+
+<p>I solved this by installing <code class="highlighter-rouge">nginx</code> locally &amp; configuring it to serve few servers on the same address. <code class="highlighter-rouge">/etc/nginx/conf.d/development.conf</code> listing:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>server {
+  listen 80;
+  server_name development.local;
+
+  location / {
+    proxy_pass http://127.0.0.1:3000; // rails server
+  }
+
+  location /api {
+    proxy_pass http://127.0.0.1:4000; // phoenix server; as you can notice, my rails server doesn't have even /api namespace - it was just a rapid prototype
+  }
+}
+</code></pre>
+</div>
+
+<p>restart nginx, add these lines to <code class="highlighter-rouge">etc/hosts/</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># For elixir-to-rails transition
+127.0.0.1 development.local
+</code></pre>
+</div>
+
+<p>and you can open <code class="highlighter-rouge">http://development.local</code> in your browser.</p>
+
+</div>
+
+
+  
+<div id="disqus_thread"></div>
+<script>
+
+  var disqus_config = function () {
+    this.page.url = 'http://asiniy.com//2016/04/09/Transition-from-Rails-To-Phoenix/';
+    this.page.identifier = 'disqus_TcAs6ELJKq';
+  };
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//asiniy-com.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+
+
+
+    </div>
+</body>
+</html>

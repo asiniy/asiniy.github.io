@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How do I test sessions in ExUnit?</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
+    <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Alex Antonov" href="/feed.xml" />
+</head>
+
+
+<body>
+    <div class="top"></div>
+    <div class="profile" style="background-image: url(http://www.justocascante.com/images/painting/sea2.jpg);">
+        <a href="/">
+          <img src="http://cs5792.vk.me/u83675669/-6/y_b1d7190e.jpg" class="img-circle" />
+        </a>
+        <h3>Alex Antonov</h3>
+        <p>Software craftsman</p>
+
+        <div class="tags_stat">
+          <h4>Tags</h4>
+          
+          <p class="tag">
+            <a href="/tag/elixir">
+              elixir (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/react.js">
+              react.js (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/javascript">
+              javascript (2)
+            </a>
+          </p>
+          
+          <p class="tag">
+            <a href="/tag/ruby">
+              ruby (1)
+            </a>
+          </p>
+          
+        </div>
+        <ul class="social">
+            
+            <a type="button" href="http://github.com/asiniy">
+                <i class="fa fa-github"></i>
+            </a>
+             
+            <a type="button" href="http://twitter.com/asiniy">
+                <i class="fa fa-twitter"></i>
+            </a>
+                
+            <a type="button" href="http://stackoverflow.com/users/2926641/asiniy">
+                <i class="fa fa-stack-overflow"></i>
+            </a>
+            
+        </ul>
+    </div>
+    <div class="posts">
+        <div class="content post">
+  <h1 class="post-title">How do I test sessions in ExUnit?</h1>
+  <div class="post-description">
+    <time>29 May 2016</time>
+    in
+    
+      <span class="tag"><a href="/tag/elixir">elixir</a></span>
+    
+  </div>
+  <p>This is the small recipe I want to share with community. I had a troubles with testing sessions in <code class="highlighter-rouge">ExUnit</code>. I started to google for answer. Only big piece of hard to understand code in <a href="http://alexmarandon.com/articles/testing_phoenix_controllers/#testing-with-the-default-plug-pipeline">Testing Phoenix controllers</a> article by Alex Marandon. But actually, this piece of code didn’t worked, at least to me.</p>
+
+<p>I also found <a href="https://github.com/phoenixframework/phoenix/issues/1008">github issue</a> in phoenix repo. Chris McCord said there are two ways to test sessions:</p>
+
+<ul>
+  <li>Use private assigns (I haven’t got it), and</li>
+  <li>Make a request to authentication controller to have a <code class="highlighter-rouge">conn</code> with request on response. Let’s do it!</li>
+</ul>
+
+<p>Actually code is simple, firstly, I wrote a module in test support. It’s about returning <code class="highlighter-rouge">conn()</code> with a session assigned:</p>
+
+<div class="language-elixir highlighter-rouge"><pre class="highlight"><code><span class="c1"># test/support/signed_conn.ex</span>
+<span class="k">defmodule</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">SignedConn</span> <span class="k">do</span>
+  <span class="nv">@endpoint</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">Endpoint</span>
+
+  <span class="kn">import</span> <span class="no">Phoenix</span><span class="o">.</span><span class="no">ConnTest</span>
+
+  <span class="k">def</span> <span class="n">signed_user_conn</span> <span class="k">do</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">MyApp</span><span class="o">.</span><span class="no">Factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="p">()</span>
+    <span class="o">|&gt;</span> <span class="n">post</span><span class="p">(</span><span class="sd">"</span><span class="s2">/your/new_session_path"</span><span class="p">,</span> <span class="p">%{</span>
+      <span class="sd">"</span><span class="s2">session"</span> <span class="o">=&gt;</span> <span class="p">%{</span>
+        <span class="sd">"</span><span class="s2">email"</span>    <span class="o">=&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
+        <span class="sd">"</span><span class="s2">password"</span> <span class="o">=&gt;</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>As you can notice, I created a user via <code class="highlighter-rouge">ex_machina</code> and then made a post request to my sessions controller.</p>
+
+<p>Now, let’s <code class="highlighter-rouge">import MyApp.SignedConn</code> to <code class="highlighter-rouge">MyApp.ConnCase</code> and</p>
+
+<p>Volia! We can use <code class="highlighter-rouge">conn()</code> without any session assigned, but <code class="highlighter-rouge">signed_user_conn()</code> for connections with already assigned user session!</p>
+
+</div>
+
+
+  
+<div id="disqus_thread"></div>
+<script>
+
+  var disqus_config = function () {
+    this.page.url = 'http://asiniy.com//2016/05/29/How-do-I-test-ExUnit-sessions/';
+    this.page.identifier = 'disqus_TcAs6ELJKq';
+  };
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//asiniy-com.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+
+
+
+    </div>
+</body>
+</html>
