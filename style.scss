@@ -327,9 +327,18 @@ tbody tr:nth-child(odd) th {
       width: 100%;
       text-align: center;
       float: none;
+      margin-bottom: 0.3em;
+    }
+    .links {
+      text-align: center;
+
+      a {
+        border-bottom: 1px dotted;
+      }
     }
     .tags_stat {
       h4 {
+        margin-top: 0.5em;
         margin-bottom: 0.5em;
       }
       .tag  {
@@ -441,8 +450,10 @@ tbody tr:nth-child(odd) th {
   }
 }
 
-.page, .post a {
-  text-decoration: underline;
+.page, .post {
+  a {
+    text-decoration: underline;
+  }
 }
 
 .highlight .hll {
