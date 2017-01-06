@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How I migrated SPA backend codebase from Rails to Phoenix</title>
+    <title>Book review - “Practical Object Oriented Design in Ruby”</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
     <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
@@ -76,55 +76,25 @@
     </div>
     <div class="posts">
         <div class="content post">
-  <h1 class="post-title">How I migrated SPA backend codebase from Rails to Phoenix</h1>
+  <h1 class="post-title">Book review - “Practical Object Oriented Design in Ruby”</h1>
   <div class="post-description">
-    <time>09 Apr 2016</time>
+    <time>01 Jan 2017</time>
     in
-    
-      <span class="tag"><a href="/tag/elixir">elixir</a></span>
     
       <span class="tag"><a href="/tag/ruby">ruby</a></span>
     
-      <span class="tag"><a href="/tag/react.js">react.js</a></span>
-    
-      <span class="tag"><a href="/tag/javascript">javascript</a></span>
+      <span class="tag"><a href="/tag/book reviews">book reviews</a></span>
     
   </div>
-  <p>Some time ago I developed a pretty simple SPA with Rails on backend &amp; React.js on the front. It was pretty simple, but (surprisingly for me!) started to grow like on steroids. Rails started to be a bottleneck since one of the customer requirements was not just making application fast. He wanted it to be instant.</p>
+  <p>I’m a self-taught programmer. I found myself to write relatively dirty, difficult to maintain code even couple of years ago. But yeah, it’s a common self-taught programmers problem: we don’t have a timeframe to learn Computer Science basics. We just register to upwork and start to work immediately (after just couple of books and courses, of course). And it’s good!</p>
 
-<p>It’s not a big deal to buy a couple of servers. But 50 ms response isn’t enough for my client. So, I decided to rewrite backend on something else. After long thinking I chose elixir &amp; phoenix.</p>
+<p>I’m happy with my salary but definitely not with the code quality I produce. I decided 2017 to be the first year when I learn Computer Science basics. The first thing to start with - is not algorithms or data structures. The most important thing to start with - is the software design, because in our days the bottleneck is placed inside the developer performance, not in the machine performance itself. Hopefully, I’ll grow hard algorhytmic codebase in 2018.</p>
 
-<p>I want to share this transition details with you - maybe you can find something interesting.</p>
+<p>The first book I’ve read on software design and software patterns - is the Sandi Metz bestseller <a href="http://www.poodr.com/">Practical Object Oriented Design in Ruby</a>. Let me go through chapters briefly.</p>
 
-<h3 id="how-to-run-both-rails--elixir-on-the-same-address">How to run both rails &amp; elixir on the same address?</h3>
+<p>The first chapter gives the basics of OOP: it’s history, prerequisites for creation and so on.</p>
 
-<p>You have to run rails &amp; phoenix on the same address to prevent battle with CORS.</p>
-
-<p>I solved this by installing <code class="highlighter-rouge">nginx</code> locally &amp; configuring it to serve few servers on the same address. <code class="highlighter-rouge">/etc/nginx/conf.d/development.conf</code> listing:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>server {
-  listen 80;
-  server_name development.local;
-
-  location / {
-    proxy_pass http://127.0.0.1:3000; // rails server
-  }
-
-  location /api {
-    proxy_pass http://127.0.0.1:4000; // phoenix server; as you can notice, my rails server doesn't have even /api namespace - it was just a rapid prototype
-  }
-}
-</code></pre>
-</div>
-
-<p>restart nginx, add these lines to <code class="highlighter-rouge">etc/hosts/</code>:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># For elixir-to-rails transition
-127.0.0.1 development.local
-</code></pre>
-</div>
-
-<p>and you can open <code class="highlighter-rouge">http://development.local</code> in your browser.</p>
+<p>Second chapter started to unload good code principles to my head. The main question Sandi asks reader here: “How to make everything in ruby” (class, object, method) work like it has a single responsibility? And she also reveals the main benefit of SRP by practical (even a little contrived) example.</p>
 
 </div>
 
@@ -134,7 +104,7 @@
 <script>
 
   var disqus_config = function () {
-    this.page.url = 'http://asiniy.com//2016/04/09/Transition-from-Rails-To-Phoenix/';
+    this.page.url = 'http://asiniy.com//2017/01/01/Practial-Object-Oriented-Design-In-Ruby-Review/';
     this.page.identifier = 'disqus_TcAs6ELJKq';
   };
 (function() { // DON'T EDIT BELOW THIS LINE
