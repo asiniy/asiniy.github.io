@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How I migrated SPA backend codebase from Rails to Phoenix</title>
+    <title>Book Review - “You don't know JS&#58; Up & Going”</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
     <link href="/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
@@ -76,55 +76,32 @@
     </div>
     <div class="posts">
         <div class="content post">
-  <h1 class="post-title">How I migrated SPA backend codebase from Rails to Phoenix</h1>
+  <h1 class="post-title">Book Review - “You don't know JS&#58; Up & Going”</h1>
   <div class="post-description">
-    <time>09 Apr 2016</time>
+    <time>02 Mar 2017</time>
     in
-    
-      <span class="tag"><a href="/tag/elixir">elixir</a></span>
-    
-      <span class="tag"><a href="/tag/ruby">ruby</a></span>
-    
-      <span class="tag"><a href="/tag/react.js">react.js</a></span>
     
       <span class="tag"><a href="/tag/javascript">javascript</a></span>
     
+      <span class="tag"><a href="/tag/book reviews">book reviews</a></span>
+    
   </div>
-  <p>Some time ago I developed a pretty simple SPA with Rails on backend &amp; React.js on the front. It was pretty simple, but (surprisingly for me!) started to grow like on steroids. Rails started to be a bottleneck since one of the customer requirements was not just making application fast. He wanted it to be instant.</p>
+  <p>I fucked up with React.js and descended to BEM implementation on my pet project. I met the common problem that average backend developer has when enters to the frontend land: lack of the javascript knowledge.</p>
 
-<p>It’s not a big deal to buy a couple of servers. But 50 ms response isn’t enough for my client. So, I decided to rewrite backend on something else. After long thinking I chose elixir &amp; phoenix.</p>
+<p>Okay, I know React.js really well, but I face tons of problems (especially with isomorphic JS building) that more Javascript-related than React.js-related. I don’t know ecosystem, I don’t know how to write performant code, I don’t know how the mechanisms really work. That’s why I decided to learn Javascript well.</p>
 
-<p>I want to share this transition details with you - maybe you can find something interesting.</p>
+<p>I decided to take something simple on my digging into the javascript. Even simpler than my current knowledge. So, Kyle Simpson’s series “You don’t know JS” looked good at the first glance. And it is, even the simplest first book “Up &amp; Going” gave me some new pieces of knowledge, even if it’s intended to learn programming newcomers.</p>
 
-<h3 id="how-to-run-both-rails--elixir-on-the-same-address">How to run both rails &amp; elixir on the same address?</h3>
+<p>These pieces are:</p>
 
-<p>You have to run rails &amp; phoenix on the same address to prevent battle with CORS.</p>
+<ul>
+  <li>better understanding of <code class="highlighter-rouge">scope</code> (but I investigated further by following the links provided in that chapter)</li>
+  <li><code class="highlighter-rouge">this</code> identifier - how it’s defined</li>
+  <li>basic knowledge of a <code class="highlighter-rouge">prototype</code></li>
+  <li><code class="highlighter-rouge">closure</code></li>
+</ul>
 
-<p>I solved this by installing <code class="highlighter-rouge">nginx</code> locally &amp; configuring it to serve few servers on the same address. <code class="highlighter-rouge">/etc/nginx/conf.d/development.conf</code> listing:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>server {
-  listen 80;
-  server_name development.local;
-
-  location / {
-    proxy_pass http://127.0.0.1:3000; // rails server
-  }
-
-  location /api {
-    proxy_pass http://127.0.0.1:4000; // phoenix server; as you can notice, my rails server doesn't have even /api namespace - it was just a rapid prototype
-  }
-}
-</code></pre>
-</div>
-
-<p>restart nginx, add these lines to <code class="highlighter-rouge">etc/hosts/</code>:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># For elixir-to-rails transition
-127.0.0.1 development.local
-</code></pre>
-</div>
-
-<p>and you can open <code class="highlighter-rouge">http://development.local</code> in your browser.</p>
+<p>Dear backend developer, I have an advice for you: if you know the JS basics and know 4 concepts listed above, feel free to skip this book and go directly to the second title “Scope &amp; Closures”.</p>
 
 </div>
 
@@ -134,7 +111,7 @@
 <script>
 
   var disqus_config = function () {
-    this.page.url = 'http://asiniy.com//2016/04/09/Transition-from-Rails-To-Phoenix/';
+    this.page.url = 'http://asiniy.com//2017/03/02/YDKJS-Up-and-Going-Review/';
     this.page.identifier = 'disqus_TcAs6ELJKq';
   };
 (function() { // DON'T EDIT BELOW THIS LINE
