@@ -6,6 +6,30 @@
 		<atom:link href="asiniy.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Book Review - “You don&#39;t know JS&amp;#58; Up &amp; Going”</title>
+        <description>&lt;p&gt;I fucked up with React.js and descended to BEM implementation on my pet project. I met the common problem that average backend developer has when enters to the frontend land: lack of the javascript knowledge.&lt;/p&gt;
+
+&lt;p&gt;Okay, I know React.js really well, but I face tons of problems (especially with isomorphic JS building) that more Javascript-related than React.js-related. I don’t know ecosystem, I don’t know how to write performant code, I don’t know how the mechanisms really work. That’s why I decided to learn Javascript well.&lt;/p&gt;
+
+&lt;p&gt;I decided to take something simple on my digging into the javascript. Even simpler than my current knowledge. So, Kyle Simpson’s series “You don’t know JS” looked good at the first glance. And it is, even the simplest first book “Up &amp;amp; Going” gave me some new pieces of knowledge, even if it’s intended to learn programming newcomers.&lt;/p&gt;
+
+&lt;p&gt;These pieces are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;better understanding of &lt;code class=&quot;highlighter-rouge&quot;&gt;scope&lt;/code&gt; (but I investigated further by following the links provided in that chapter)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; identifier - how it’s defined&lt;/li&gt;
+  &lt;li&gt;basic knowledge of a &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;closure&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Dear backend developer, I have an advice for you: if you know the JS basics and know 4 concepts listed above, feel free to skip this book and go directly to the second title “Scope &amp;amp; Closures”.&lt;/p&gt;
+</description>
+				<pubDate>Thu, 02 Mar 2017 00:00:00 +0300</pubDate>
+				<link>asiniy.com/2017/03/02/YDKJS-Up-and-Going-Review/</link>
+				<guid isPermaLink="true">asiniy.com/2017/03/02/YDKJS-Up-and-Going-Review/</guid>
+			</item>
+		
+			<item>
 				<title>Book Review - “Practical Object Oriented Design in Ruby”</title>
         <description>&lt;p&gt;I’m a self-taught programmer. I found myself to write relatively dirty, difficult to maintain code even couple of years ago. But yeah, it’s a common self-taught programmers problem: we don’t have a timeframe to learn Computer Science basics. We just register to upwork and start to work immediately (after just couple of books and courses, of course). And it’s good!&lt;/p&gt;
 
