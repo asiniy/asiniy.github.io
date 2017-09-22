@@ -11,11 +11,11 @@
 
 &lt;p&gt;But I did it!&lt;/p&gt;
 
-&lt;p&gt;I picked a book related to the Metaprogramming in Elixir programming language because I’m facing problems with grasping Elixir metaprogramming too often. I’m the author of 2 Elixir libraries which intensively uses metaprogramming &lt;a href=&quot;https://github.com/asiniy/ecto_state_machine&quot;&gt;[1]&lt;/a&gt;, &lt;a href=&quot;https://github.com/asiniy/ecto_materialized_path&quot;&gt;[2]&lt;/a&gt; plus one of my projects has Elixir API inside so the need to know how metaprogram in Elixir is confident.&lt;/p&gt;
+&lt;p&gt;I picked a book related to the Metaprogramming in Elixir because I’m facing problems with grasping Elixir metaprogramming too often. I’m the author of 2 Elixir libraries which intensively use metaprogramming &lt;a href=&quot;https://github.com/asiniy/ecto_state_machine&quot;&gt;[1]&lt;/a&gt;, &lt;a href=&quot;https://github.com/asiniy/ecto_materialized_path&quot;&gt;[2]&lt;/a&gt; plus one of my projects has Elixir API inside so I’m sure need to know how to metaprogram in Elixir.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://pragprog.com/book/cmelixir/metaprogramming-elixir&quot;&gt;C. McCord&lt;/a&gt;’s gave me a lot of context on internal Elixir mechanisms so it’s definitely worth to read. I wouldn’t retell all its details to you but it gaves me a lot of answers on my &lt;code class=&quot;highlighter-rouge&quot;&gt;how?&lt;/code&gt; questions.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://pragprog.com/book/cmelixir/metaprogramming-elixir&quot;&gt;C. McCord&lt;/a&gt;’s gave me a lot of context on internal Elixir mechanisms so it’s definitely worth to read. I wouldn’t recite all its details to you but it gave me a lot of answers on my &lt;code class=&quot;highlighter-rouge&quot;&gt;how?&lt;/code&gt; questions.&lt;/p&gt;
 
-&lt;p&gt;My VERDICT: if you want to bring your Elixir to the next level, READ IT&lt;/p&gt;
+&lt;p&gt;My VERDICT: if you want to bring your Elixir to the next level READ THIS BOOK&lt;/p&gt;
 </description>
 				<pubDate>Thu, 21 Sep 2017 00:00:00 +0300</pubDate>
 				<link>asiniy.com/2017/09/21/Metaprogramming-Elixir/</link>
