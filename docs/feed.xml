@@ -6,6 +6,25 @@
 		<atom:link href="asiniy.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Book Review - “Learn Python The Hard Way”</title>
+        <description>&lt;p&gt;I haven’t read IT-books for a long-long period. I preferred to do humanitarian science instead.&lt;/p&gt;
+
+&lt;p&gt;Now it’s time to get back to the IT sector.&lt;/p&gt;
+
+&lt;p&gt;My NEXT BIG THING (TM) for 2018 is Data Science. It’s a no-brainer you can’t grab the whole ML/NN/AI stuff in only one year, but I’d say it’s real to learn basic algorithms/libraries in 1 year, even smaller period of time. So, this is where I go to.&lt;/p&gt;
+
+&lt;p&gt;My first book on this road is a famous &lt;a href=&quot;https://learnpythonthehardway.org/&quot;&gt;LPTHW by Z. Shaw&lt;/a&gt;. It’s written for SO newbies. But I haven’t found any other short and concise introductions to Python. This introduction is so basic, but it’s definitely good for grabbing easiest essentials (you have to omit big amount of text optional even for mid-level devs though).&lt;/p&gt;
+
+&lt;p&gt;You can read my LPTHW solutions here: &lt;a href=&quot;https://github.com/asiniy/lpthw&quot;&gt;https://github.com/asiniy/lpthw&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;My VERDICT: it’s up to situation.&lt;/p&gt;
+</description>
+				<pubDate>Sun, 17 Dec 2017 00:00:00 +0300</pubDate>
+				<link>asiniy.com/2017/12/17/Learn-Python-The-Hard-Way/</link>
+				<guid isPermaLink="true">asiniy.com/2017/12/17/Learn-Python-The-Hard-Way/</guid>
+			</item>
+		
+			<item>
 				<title>Book Review - “Metaprogramming Elixir”</title>
         <description>&lt;p&gt;I haven’t read technical books for a while. Indeed, it was a little exciting to open a programming book after a long list of historical and political ones.&lt;/p&gt;
 
